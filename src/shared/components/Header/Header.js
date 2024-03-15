@@ -1,4 +1,9 @@
 function Header(params) {
+    const fixSearchBar =(event) => {
+        if (event.target.value.length <= 2)
+        return
+       console.log(event.target.value);
+    }
     return (
         <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -15,7 +20,8 @@ function Header(params) {
                     <div className="input-group-prepend bg-transparent">
                         <i className="input-group-text border-0 mdi mdi-magnify"></i>
                     </div>
-                    <input type="text" className="form-control bg-transparent border-0" placeholder="Search projects" />
+                    <input type="text" className="form-control bg-transparent border-0" placeholder="Search projects"
+                    onInput={(n) => fixSearchBar(n) } />
                     </div>
                 </form>
                 </div>
