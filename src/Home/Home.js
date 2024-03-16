@@ -1,4 +1,8 @@
 import Footer from './../shared/components/Footer/Footer'
+import ProductSalesandMore from './ProductSalesandMore'
+// import imageslogo from './../../public/assets/images/faces'
+// import images2 from './../../public/assets/images/dashboard'
+
 
 function Home() {
     return (
@@ -19,50 +23,32 @@ function Home() {
                             </ul>
                         </nav>
                     </div>
-
+{/* __________________________________________________________________________________________________________________________________________ */}
+            
                     <div className="row">
                         <div className="col-md-4 stretch-card grid-margin">
                             <div className="card bg-gradient-danger card-img-holder text-white">
-                                <div className="card-body">
-                                    <img src="assets/images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image" />
-                                    <h4 className="font-weight-normal mb-3">
-                                        Weekly Sales 
-                                        <i className="mdi mdi-chart-line mdi-24px float-right"></i>
-                                    </h4>
-                                    <h2 className="mb-5">$ 15,0000</h2>
-                                    <h6 className="card-text">Increased by 60%</h6>
-                                </div>
+                                <ProductSalesandMore tag1 = 'Weekly Sales' tag2= '$15000' tag3='Increased By 60%'/>
                             </div>
                         </div>
 
                         <div className="col-md-4 stretch-card grid-margin">
                             <div className="card bg-gradient-info card-img-holder text-white">
-                                <div className="card-body">
-                                    <img src="assets/images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image" />
-                                    <h4 className="font-weight-normal mb-3">
-                                        Weekly Orders 
-                                        <i className="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                                    </h4>
-                                    <h2 className="mb-5">45,6334</h2>
-                                    <h6 className="card-text">Decreased by 10%</h6>
-                                </div>
+                            <ProductSalesandMore tag1 = 'Weekly Orders' tag2= '45,6334' tag3='Decreased By 10%'/>
+                                
                             </div>
                         </div>
+                      
 
                         <div className="col-md-4 stretch-card grid-margin">
                             <div className="card bg-gradient-success card-img-holder text-white">
-                                <div className="card-body">
-                                    <img src="assets/images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image" />
-                                    <h4 className="font-weight-normal mb-3">
-                                        Visitors Online 
-                                        <i className="mdi mdi-diamond mdi-24px float-right"></i>
-                                    </h4>
-                                    <h2 className="mb-5">95,5741</h2>
-                                    <h6 className="card-text">Increased by 5%</h6>
-                                </div>
+
+                                <ProductSalesandMore tag1 = 'Visitors Online ' tag2= '95,5741' tag3='Increased by 5%'/>
+                               
                             </div>
                         </div>
                     </div>
+{/* _________________________________________________________________________________________________________________________________________ */}
 
                     <div className="row">
                         <div className="col-md-7 grid-margin stretch-card">
@@ -106,7 +92,7 @@ function Home() {
                                     <tbody>
                                     <tr>
                                         <td>
-                                        <img src="assets/images/faces/face1.jpg" className="me-2" alt="image" /> David Grey
+                                        <img src='assets/images/faces/face1.jpg' className="me-2" alt="image1" /> David Grey
                                         </td>
                                         <td> Fund is not recieved </td>
                                         <td>
@@ -117,7 +103,7 @@ function Home() {
                                     </tr>
                                     <tr>
                                         <td>
-                                        <img src="assets/images/faces/face2.jpg" className="me-2" alt="image" /> Stella Johnson
+                                        <img src="assets/images/faces/face2.jpg" className="me-2" alt="image2" /> Stella Johnson
                                         </td>
                                         <td> High loading time </td>
                                         <td>
@@ -128,7 +114,7 @@ function Home() {
                                     </tr>
                                     <tr>
                                         <td>
-                                        <img src="assets/images/faces/face3.jpg" className="me-2" alt="image" /> Marina Michel
+                                        <img src="assets/images/faces/face3.jpg" className="me-2" alt="image3" /> Marina Michel
                                         </td>
                                         <td> Website down for one week </td>
                                         <td>
@@ -139,7 +125,7 @@ function Home() {
                                     </tr>
                                     <tr>
                                         <td>
-                                        <img src="assets/images/faces/face4.jpg" className="me-2" alt="image" /> John Doe
+                                        <img src="assets/images/faces/face4.jpg" className="me-2" alt="image4" /> John Doe
                                         </td>
                                         <td> Loosing control on server </td>
                                         <td>
@@ -173,16 +159,16 @@ function Home() {
                                     </div>
                                     <div className="row mt-3">
                                         <div className="col-6 pe-1">
-                                            <img src="assets/images/dashboard/img_1.jpg" className="mb-2 mw-100 w-100 rounded" alt="image" />
-                                            <img src="assets/images/dashboard/img_4.jpg" className="mw-100 w-100 rounded" alt="image" />
+                                            <img src="assets/images/dashboard/img_1.jpg" className="mb-2 mw-100 w-100 rounded" alt="image5" />
+                                            <img src="assets/images/dashboard/img_4.jpg" className="mw-100 w-100 rounded" alt="image6" />
                                         </div>
                                         <div className="col-6 ps-1">
-                                            <img src="assets/images/dashboard/img_2.jpg" className="mb-2 mw-100 w-100 rounded" alt="image" />
-                                            <img src="assets/images/dashboard/img_3.jpg" className="mw-100 w-100 rounded" alt="image" />
+                                            <img src="assets/images/dashboard/img_2.jpg" className="mb-2 mw-100 w-100 rounded" alt="image7" />
+                                            <img src="assets/images/dashboard/img_3.jpg" className="mw-100 w-100 rounded" alt="image8" />
                                         </div>
                                     </div>
                                     <div className="d-flex mt-5 align-items-top">
-                                        <img src="assets/images/faces/face3.jpg" className="img-sm rounded-circle me-3" alt="image" />
+                                        <img src="assets/images/faces/face3.jpg" className="img-sm rounded-circle me-3" alt="image9" />
                                         <div className="mb-0 flex-grow">
                                             <h5 className="me-2 mb-2">School Website - Authentication Module.</h5>
                                             <p className="mb-0 font-weight-light">It is a long established fact that a reader will be distracted by the readable content of a page.</p>
@@ -298,7 +284,7 @@ function Home() {
                                             <li className="completed">
                                             <div className="form-check">
                                                 <label className="form-check-label">
-                                                <input className="checkbox" type="checkbox" checked /> Call John </label>
+                                                <input className="checkbox" type="checkbox" defaultChecked /> Call John </label>
                                             </div>
                                             <i className="remove mdi mdi-close-circle-outline"></i>
                                             </li>
@@ -319,7 +305,7 @@ function Home() {
                                             <li className="completed">
                                             <div className="form-check">
                                                 <label className="form-check-label">
-                                                <input className="checkbox" type="checkbox" checked /> Prepare for presentation </label>
+                                                <input className="checkbox" type="checkbox" defaultChecked /> Prepare for presentation </label>
                                             </div>
                                             <i className="remove mdi mdi-close-circle-outline"></i>
                                             </li>
