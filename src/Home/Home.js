@@ -31,16 +31,21 @@ function Home() {
               tag1="Weekly Sales"
               tag2="$15000"
               tag3="Increased By 60%"
+              tag4="danger"
             />
             <ProductSalesandMore
               tag1="Weekly Orders"
               tag2="45,6334"
               tag3="Decreased By 10%"
+              tag4="info"
+
             />
             <ProductSalesandMore
               tag1="Visitors Online "
               tag2="95,5741"
               tag3="Increased by 5%"
+              tag4="success"
+
             />
           </div>
           {/* _________________________________________________________________________________________________________________________________________ */}
