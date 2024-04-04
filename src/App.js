@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <div className="container-fluid page-body-wrapper">
+      <div className="container-fluid page-body-wrapper rebase-class">
         <Sidebar />
         <Home />
       </div>
