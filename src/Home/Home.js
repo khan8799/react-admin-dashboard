@@ -21,6 +21,12 @@ function Home() {
             title: 'Visitors Online',
             summary: '95,5741',
             description: 'Increased by 5%'
+        },
+        {
+            parentClass: 'bg-gradient-rebase',
+            title: 'Visitors Online',
+            summary: '95,5741',
+            description: 'Increased by 5%'
         }
     ]
     return (
