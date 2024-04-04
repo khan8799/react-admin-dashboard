@@ -1,39 +1,54 @@
-function Sidebar(params) {
+import { Link } from "react-router-dom"
+import {sideMenus} from './sideMenus'
+
+function Sidebar() {
+    const menus = sideMenus;
+
     return (
         <>
             <nav className="sidebar sidebar-offcanvas" id="sidebar">
                 <ul className="nav">
-                    <li className="nav-item nav-profile">
-                    <a href="#" className="nav-link">
-                        <div className="nav-profile-image">
-                        <img src="assets/images/faces/face1.jpg" alt="profile" />
-                        <span className="login-status online"></span>
+                    {/* <li className="nav-item nav-profile">
+                        <a href="#" className="nav-link">
+                            <div className="nav-profile-image">
+                                <img src="assets/images/faces/face1.jpg" alt="profile" />
+                                <span className="login-status online"></span>
+                            </div>
+                            <div className="nav-profile-text d-flex flex-column">
+                                <span className="font-weight-bold mb-2">David Grey. H</span>
+                                <span className="text-secondary text-small">Project Manager</span>
+                            </div>
+                            <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                        </a>
+                    </li> */}
+
+                    {
+                        menus.map(sideMenu => {
+                            return (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to={sideMenu.path}>
+                                            <span className="menu-title">{sideMenu.name}</span>
+                                            <i className={`mdi menu-icon ${sideMenu.iconClass}`}></i>
+                                        </Link>
+                                    </li>
+                                </>
+                            )
+                        })
+                    }
+                    
+                    {/* <li className="nav-item">
+                        <a className="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                            <span className="menu-title">Basic UI Elements</span>
+                            <i className="menu-arrow"></i>
+                            <i className="mdi mdi-crosshairs-gps menu-icon"></i>
+                        </a>
+                        <div className="collapse" id="ui-basic">
+                            <ul className="nav flex-column sub-menu">
+                            <li className="nav-item"> <a className="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
+                            <li className="nav-item"> <a className="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                            </ul>
                         </div>
-                        <div className="nav-profile-text d-flex flex-column">
-                        <span className="font-weight-bold mb-2">David Grey. H</span>
-                        <span className="text-secondary text-small">Project Manager</span>
-                        </div>
-                        <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-                    </a>
-                    </li>
-                    <li className="nav-item">
-                    <a className="nav-link" href="index.html">
-                        <span className="menu-title">Dashboard</span>
-                        <i className="mdi mdi-home menu-icon"></i>
-                    </a>
-                    </li>
-                    <li className="nav-item">
-                    <a className="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                        <span className="menu-title">Basic UI Elements</span>
-                        <i className="menu-arrow"></i>
-                        <i className="mdi mdi-crosshairs-gps menu-icon"></i>
-                    </a>
-                    <div className="collapse" id="ui-basic">
-                        <ul className="nav flex-column sub-menu">
-                        <li className="nav-item"> <a className="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                        <li className="nav-item"> <a className="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                        </ul>
-                    </div>
                     </li>
                     <li className="nav-item">
                     <a className="nav-link" href="pages/icons/mdi.html">
@@ -68,7 +83,9 @@ function Sidebar(params) {
                     <div className="collapse" id="general-pages">
                         <ul className="nav flex-column sub-menu">
                         <li className="nav-item"> <a className="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                        <li className="nav-item"> <a className="nav-link" href="pages/samples/login.html"> Login </a></li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/login"> Login </Link>
+                        </li>
                         <li className="nav-item"> <a className="nav-link" href="pages/samples/register.html"> Register </a></li>
                         <li className="nav-item"> <a className="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
                         <li className="nav-item"> <a className="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
@@ -91,7 +108,7 @@ function Sidebar(params) {
                         </ul>
                         </div>
                     </span>
-                    </li>
+                    </li> */}
                 </ul>
                 </nav>
         </>
