@@ -26,18 +26,16 @@ export default function ProductList() {
                             {
                                 products.map((product, index) => {
                                     return (
-                                    <>
                                         <tr key={index + 1}>
-                                        <td> 1 </td>
-                                        <td> Herman Beck </td>
-                                        <td> May 15, 2015 </td>
-                                        <td>
-                                            <div className="progress">
-                                                <div className="w-25 progress-bar bg-gradient-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </td>
+                                            <td> 1 </td>
+                                            <td> Herman Beck </td>
+                                            <td> May 15, 2015 </td>
+                                            <td>
+                                                <div className="progress">
+                                                    <div className="w-25 progress-bar bg-gradient-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    </>
                                     )
                                 })
                             }
