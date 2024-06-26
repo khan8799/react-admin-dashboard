@@ -1,16 +1,20 @@
 import './App.css';
-import Header from './shared/components/Header/Header'
-import Sidebar from './shared/components/Sidebar/Sidebar'
 import Home from './Home/Home'
+import Layout from './shared/components/Layout/Layout';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Dashboard from './shared/components/Dashboard/Dashboard';
 
 function App() {
   return (
     <>
-      <Header />
-      <div className="container-fluid page-body-wrapper">
-        <Sidebar />
-        <Home />
-      </div>
+      <BrowserRouter>
+      <Routes>
+        <Route path='/' element = {<Layout />}>
+          <Route index element = {<Home />}></Route>
+          <Route path = "/dashboard" element = {<Dashboard />}></Route>
+        </Route>
+      </Routes>
+      </BrowserRouter>
     </>
   );
 }
