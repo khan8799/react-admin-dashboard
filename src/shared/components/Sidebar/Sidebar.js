@@ -9,16 +9,14 @@ function Sidebar() {
             <nav className="sidebar sidebar-offcanvas" id="sidebar">
                 <ul className="nav">
                     {
-                        menus.map(sideMenu => {
+                        menus.map((sideMenu, index) => {
                             return (
-                                <>
-                                    <li className="nav-item">
-                                        <Link className="nav-link" to={sideMenu.path}>
-                                            <span className="menu-title">{sideMenu.name}</span>
-                                            <i className={`mdi menu-icon ${sideMenu.iconClass}`}></i>
-                                        </Link>
-                                    </li>
-                                </>
+                                <li className="nav-item" key={index + 1}>
+                                    <Link className="nav-link" to={sideMenu.path}>
+                                        <span className="menu-title">{sideMenu.name}</span>
+                                        <i className={`mdi menu-icon ${sideMenu.iconClass}`}></i>
+                                    </Link>
+                                </li>
                             )
                         })
                     }
