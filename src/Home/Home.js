@@ -84,19 +84,17 @@ function Home() {
                                 {
                                     dummyArr.map((v, i) => {
                                         return (
-                                            <>
-                                                <tr key={i + 1}>
-                                                    <td>
-                                                    <img src="assets/images/faces/face1.jpg" className="me-2" alt="image" /> David Grey
-                                                    </td>
-                                                    <td> Fund is not recieved </td>
-                                                    <td>
-                                                    <label className="badge badge-gradient-success">DONE</label>
-                                                    </td>
-                                                    <td> Dec 5, 2017 </td>
-                                                    <td> WD-12345 </td>
-                                                </tr>
-                                            </>
+                                            <tr key={i + 1}>
+                                                <td>
+                                                <img src="assets/images/faces/face1.jpg" className="me-2" alt="image" /> David Grey
+                                                </td>
+                                                <td> Fund is not recieved </td>
+                                                <td>
+                                                <label className="badge badge-gradient-success">DONE</label>
+                                                </td>
+                                                <td> Dec 5, 2017 </td>
+                                                <td> WD-12345 </td>
+                                            </tr>
                                         )
                                     })
                                 }

@@ -12,7 +12,37 @@ export default function ProductAdd() {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        console.log(formData);
+        if (isFormValid()) saveCategory();
+        else handleError();
+    }
+
+    const isFormValid = () => {
+        let valid = true;
+
+        for (const key in formData) {
+            if (!formData[key]) valid = false
+        }
+
+        return valid;
+    }
+
+    const saveCategory = () => {
+        const url = '';
+        const option = {
+            method: 'POST',
+            body: JSON.stringify(formData)
+        }
+
+        fetch(url, option)
+            .then(data => data.json())
+            .then(data => {
+                console.log(data);
+
+            })
+    }
+
+    const handleError = () => {
+
     }
     
     return (
