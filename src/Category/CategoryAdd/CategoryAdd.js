@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function CategoryAdd() {
+export default function CategoryAdd({onAddCategory}) {
     const initialValues = {name: '', description: ''}
     const [formValues, setFormValues] = useState(initialValues);
     const [isFormInValid, setFormInValid] = useState(true)
@@ -21,6 +21,22 @@ export default function CategoryAdd() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+	    // const url = 'https://future-tech.onrender.com/api/category';
+        const url = 'http://localhost:8080/api/category';
+        const option = {
+            method: 'POST',
+            body: JSON.stringify(formValues),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+        fetch(url, option)
+            .then(res => res.json())
+			.then(res => {
+                onAddCategory(res.payload);
+                setFormValues(initialValues)
+			})
     }
 
     return (
@@ -37,6 +53,7 @@ export default function CategoryAdd() {
                                 className="form-control"
                                 id="name"
                                 placeholder="Name"
+                                value={formValues.name}
                                 onChange={handleChange}/>
                         </div>
                         <div className="form-group">
@@ -46,6 +63,7 @@ export default function CategoryAdd() {
                                 className="form-control"
                                 id="description"
                                 rows="4"
+                                value={formValues.description}
                                 onChange={handleChange}></textarea>
                         </div>
                         <button disabled={isFormInValid} type="submit" className="btn btn-gradient-primary me-2">Save</button>
