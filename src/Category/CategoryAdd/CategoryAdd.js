@@ -57,50 +57,48 @@ export default function CategoryAdd({onAddCategory}) {
     }
 
     return (
-        <>
-            <div className="card">
-                <div className="card-body">
-                    <h4 className="card-title">Add Category</h4>
-                    <form className="forms-sample" onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="name">Name</label>
-                            <input
-                                name="name"
-                                type="text"
-                                className="form-control"
-                                id="name"
-                                placeholder="Name"
-                                value={formValues.name}
-                                onChange={handleChange}/>
-                            {
-                                formErrors.name &&
-                                <div className="form-error">
-                                    { formErrors.name }
-                                </div>
-                            }
-                            
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="description">Description</label>
-                            <textarea
-                                name="description"
-                                className="form-control"
-                                id="description"
-                                rows="4"
-                                value={formValues.description}
-                                onChange={handleChange}></textarea>
-                            {
-                                formErrors.description &&
-                                <div className="form-error">
-                                    { formErrors.description }
-                                </div>
-                            }
-                        </div>
-                        <button type="submit" className="btn btn-gradient-primary me-2">Save</button>
-                        <button className="btn btn-light">Cancel</button>
-                    </form>
-                </div>
+        <div className="card">
+            <div className="card-body">
+                <h4 className="card-title">Add Category</h4>
+                <form className="forms-sample" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="name">Name</label>
+                        <input
+                            name="name"
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            placeholder="Name"
+                            value={formValues.name}
+                            onChange={handleChange}/>
+                        {
+                            formErrors.name &&
+                            <div className="form-error">
+                                { formErrors.name }
+                            </div>
+                        }
+                        
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                            name="description"
+                            className="form-control"
+                            id="description"
+                            rows="4"
+                            value={formValues.description}
+                            onChange={handleChange}></textarea>
+                        {
+                            formErrors.description &&
+                            <div className="form-error">
+                                { formErrors.description }
+                            </div>
+                        }
+                    </div>
+                    <button type="submit" className="btn btn-gradient-primary me-2">Save</button>
+                    <button className="btn btn-light">Cancel</button>
+                </form>
             </div>
-        </>
+        </div>
     )
 }
