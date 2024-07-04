@@ -2,28 +2,30 @@ import { useState } from "react"
 
 export default function CategoryAdd({onAddCategory}) {
     const initialValues = {name: '', description: ''}
+    const formErrorMsg = {name: 'Name is required', description: 'Description is required'}
     const [formValues, setFormValues] = useState(initialValues);
-    const [isFormInValid, setFormInValid] = useState(true)
+    const [formErrors, setFormErrors] = useState({});
 
     const handleChange = (event) => {
         const {name, value} = event.target
         setFormValues({...formValues, [name]: value})
-        validateForm();
+        setFormControlErrorMsg(name, value);
     }
 
-    const validateForm = () => {
-        let inValid = false;
-        for (const key in formValues) {
-            if (!formValues[key]) inValid = true;
-        }
-        setFormInValid(inValid);
+    const setFormControlErrorMsg = (controlName, value) => {
+        setFormErrors((prev) => {
+            return {
+                ...prev,
+                [controlName]: value ? '' : formErrorMsg[controlName]
+            }
+        })
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
+        if (isFormInvalid()) return;
 
-	    // const url = 'https://future-tech.onrender.com/api/category';
-        const url = 'http://localhost:8080/api/category';
+	    const url = 'https://future-tech.onrender.com/api/category';
         const option = {
             method: 'POST',
             body: JSON.stringify(formValues),
@@ -34,9 +36,24 @@ export default function CategoryAdd({onAddCategory}) {
         fetch(url, option)
             .then(res => res.json())
 			.then(res => {
-                onAddCategory(res.payload);
-                setFormValues(initialValues)
+                onAddCategory(res.payload)
+                resetForm()
 			})
+    }
+
+    const isFormInvalid = () => {
+        let inValid = false;
+        for (const key in formValues) {
+            if (!formValues[key]) {
+                inValid = true;
+                setFormControlErrorMsg(key, formValues[key])
+            }
+        }
+        return inValid
+    }
+
+    const resetForm = () => {
+        setFormValues(initialValues)
     }
 
     return (
@@ -55,6 +72,13 @@ export default function CategoryAdd({onAddCategory}) {
                                 placeholder="Name"
                                 value={formValues.name}
                                 onChange={handleChange}/>
+                            {
+                                formErrors.name &&
+                                <div className="form-error">
+                                    { formErrors.name }
+                                </div>
+                            }
+                            
                         </div>
                         <div className="form-group">
                             <label htmlFor="description">Description</label>
@@ -65,8 +89,14 @@ export default function CategoryAdd({onAddCategory}) {
                                 rows="4"
                                 value={formValues.description}
                                 onChange={handleChange}></textarea>
+                            {
+                                formErrors.description &&
+                                <div className="form-error">
+                                    { formErrors.description }
+                                </div>
+                            }
                         </div>
-                        <button disabled={isFormInValid} type="submit" className="btn btn-gradient-primary me-2">Save</button>
+                        <button type="submit" className="btn btn-gradient-primary me-2">Save</button>
                         <button className="btn btn-light">Cancel</button>
                     </form>
                 </div>

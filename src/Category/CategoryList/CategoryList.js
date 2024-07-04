@@ -5,8 +5,7 @@ import Breadcrumb from "./../../shared/components/Breadcrumb/Breadcrumb";
 import CategoryAdd from "./../CategoryAdd/CategoryAdd";
 
 function CategoryList() {
-	// const url = 'https://future-tech.onrender.com/api/category';
-	const url = 'http://localhost:8080/api/category';
+	const url = 'https://future-tech.onrender.com/api/category';
 	const [categories, setCategories] = useState([]);
 
 	const getCategories = () => {
