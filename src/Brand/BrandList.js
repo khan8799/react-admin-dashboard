@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import Card from '../components/Card';
 import Table from '../components/Table';
-import { API_URL } from './../shared/utilities/httpHelper'
+import { makeRequest } from './../shared/utilities/httpHelper'
 
-export default function BrandList() {
-    const url = `${API_URL}category`;
+export default function BrandList({ toggleLoading }) {
     const [brands, setBrands] = useState([]);
-
     useEffect(() => getBrands(), [])
 
     const getBrands = () => {
-        fetch(url)
-            .then(res => res.json())
+        makeRequest('category')
             .then(res => setBrands(res.payload))
+            .finally(() => toggleLoading(false))
     }
 
     return (
-        <Card title="Project Status">
+        <>
             <Table>
                 <thead>
                     <tr>
@@ -37,6 +34,6 @@ export default function BrandList() {
                     })}
                 </tbody>
             </Table>
-        </Card>
+        </>
     )
 }

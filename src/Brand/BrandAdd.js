@@ -1,32 +1,65 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { makeRequest } from '../shared/utilities/httpHelper'
 
-export default function BrandAdd() {
-  return (
-	<div className="card">
-		<div className="card-body">
-			<h4 className="card-title">Add Brand</h4>
-			<form className="forms-sample">
-				<div className="form-group">
-					<label htmlFor="name">Name</label>
-					<input
-						name="name"
-						type="text"
-						className="form-control"
-						id="name"
-						placeholder="Name"/>
-				</div>
-				<div className="form-group">
-					<label htmlFor="description">Description</label>
-					<textarea
-						name="description"
-						className="form-control"
-						id="description"
-						rows="4"></textarea>
-				</div>
-				<button type="submit" className="btn btn-gradient-primary me-2">Save</button>
-				<button className="btn btn-light">Cancel</button>
-			</form>
-		</div>
-	</div>
-  )
+export default function BrandAdd({ toggleLoading }) {
+	const initialValue = {name: '', description: ''}
+	const [formValues, setFormValues] = useState(initialValue)
+
+	const handleChange = (event) => {
+		const {name, value} = event.target
+		setFormValues({
+			...formValues,
+			[name]: value
+		})
+	}
+
+	const handleSubmit = (event) => {
+		event.preventDefault()
+		submit();
+	}
+
+	const submit = () => {
+		toggleLoading(true)
+		const url = 'category';
+		const option = {
+			method: 'POST',
+			body: JSON.stringify(formValues),
+			headers: {
+                "Content-Type": "application/json",
+            },
+		}
+
+		makeRequest(url, option)
+			.then(res => {
+				console.log(res);
+				
+			})
+			.finally(() => toggleLoading(false))
+	}
+
+	return (
+		<form className="forms-sample" onSubmit={handleSubmit}>
+			<div className="form-group">
+				<label htmlFor="name">Name</label>
+				<input
+					name="name"
+					type="text"
+					className="form-control"
+					id="name"
+					placeholder="Name"
+					onChange={handleChange}/>
+			</div>
+			<div className="form-group">
+				<label htmlFor="description">Description</label>
+				<textarea
+					name="description"
+					className="form-control"
+					id="description"
+					rows="4"
+					onChange={handleChange}></textarea>
+			</div>
+			<button type="submit" className="btn btn-gradient-primary me-2">Save</button>
+			<button className="btn btn-light">Cancel</button>
+		</form>
+	)
 }
