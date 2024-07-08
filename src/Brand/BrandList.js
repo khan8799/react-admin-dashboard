@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Table from '../components/Table';
 import { makeRequest } from './../shared/utilities/httpHelper'
 
-export default function BrandList({ toggleLoading }) {
+export default function BrandList({ toggleLoading, newBrand }) {
     const [brands, setBrands] = useState([]);
-    useEffect(() => getBrands(), [])
+
+    useEffect(() => getBrands(), [newBrand])
 
     const getBrands = () => {
+        toggleLoading(true)
         makeRequest('category')
             .then(res => setBrands(res.payload))
             .finally(() => toggleLoading(false))

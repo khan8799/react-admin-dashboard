@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeRequest } from '../shared/utilities/httpHelper'
 
-export default function BrandAdd({ toggleLoading }) {
+export default function BrandAdd({ toggleLoading, onAddBrand }) {
 	const initialValue = {name: '', description: ''}
 	const [formValues, setFormValues] = useState(initialValue)
 
@@ -31,8 +31,7 @@ export default function BrandAdd({ toggleLoading }) {
 
 		makeRequest(url, option)
 			.then(res => {
-				console.log(res);
-				
+				onAddBrand(formValues);
 			})
 			.finally(() => toggleLoading(false))
 	}
