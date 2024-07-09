@@ -20,7 +20,7 @@ export default function BrandAdd({ toggleLoading, onAddBrand }) {
 
 	const submit = () => {
 		toggleLoading(true)
-		const url = 'category';
+		const url = 'brand';
 		const option = {
 			method: 'POST',
 			body: JSON.stringify(formValues),
@@ -32,6 +32,7 @@ export default function BrandAdd({ toggleLoading, onAddBrand }) {
 		makeRequest(url, option)
 			.then(res => {
 				onAddBrand(formValues);
+				setFormValues(initialValue)
 			})
 			.finally(() => toggleLoading(false))
 	}
@@ -46,6 +47,7 @@ export default function BrandAdd({ toggleLoading, onAddBrand }) {
 					className="form-control"
 					id="name"
 					placeholder="Name"
+					value={formValues.name}
 					onChange={handleChange}/>
 			</div>
 			<div className="form-group">
@@ -55,6 +57,7 @@ export default function BrandAdd({ toggleLoading, onAddBrand }) {
 					className="form-control"
 					id="description"
 					rows="4"
+					value={formValues.description}
 					onChange={handleChange}></textarea>
 			</div>
 			<button type="submit" className="btn btn-gradient-primary me-2">Save</button>

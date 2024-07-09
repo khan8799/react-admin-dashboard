@@ -9,7 +9,7 @@ export default function BrandList({ toggleLoading, newBrand }) {
 
     const getBrands = () => {
         toggleLoading(true)
-        makeRequest('category')
+        makeRequest('brand')
             .then(res => setBrands(res.payload))
             .finally(() => toggleLoading(false))
     }
