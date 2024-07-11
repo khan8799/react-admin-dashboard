@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Table from '../components/Table';
 import { makeRequest } from './../shared/utilities/httpHelper'
-import Alert from '../shared/components/Alert/Alert';
 import { useSnackbar } from 'notistack';
 
 export default function BrandList({ toggleLoading, newBrand }) {
     const [brands, setBrands] = useState([]);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    let selectedBrand;
+    let selectedBrand = null;
 
     useEffect(() => getBrands(), [newBrand])
 
@@ -18,56 +17,60 @@ export default function BrandList({ toggleLoading, newBrand }) {
             .finally(() => toggleLoading(false))
     }
 
+    const onDelete = (brand) => {
+        selectedBrand = brand
+        enqueueSnackbar(`Do you really want to delete ${brand.name} brand?`, {
+            variant: 'error',
+            anchorOrigin: {vertical: 'top', horizontal: 'center'},
+            action,
+            persist: true
+        })
+    }
+
     const action = () => (
         <>
             <button className="btn btn-sm btn-danger me-2" onClick={() => {
-                deleteBrand()
                 closeSnackbar()
+                deleteBrand()
+
             }}>
                 Yes, Delete it
             </button>
-            <button className="btn btn-sm btn-primary" onClick={closeSnackbar}>
+            <button className="btn btn-sm btn-success" onClick={() => { closeSnackbar() }}>
                 No
             </button>
         </>
     );
 
-    const showConfirm = (brand) => {
-        selectedBrand = brand
-        enqueueSnackbar(`Do you really want to delete ${brand.name}`, {
-            action,
-            variant: 'error',
-            anchorOrigin: { vertical: 'top', horizontal: 'center' }
-        })
-    }
-
     const deleteBrand = () => {
         toggleLoading(true)
-
-        const url = `brand/${selectedBrand._id}`
-        const option = {
-            method: 'DELETE',
-        }
-        makeRequest(url, option)
-            .then(res => removeDeletedBrandFromList())
+        const { _id } = selectedBrand
+        const url = `brand/${_id}`
+        makeRequest(url, {method: 'DELETE'})
+            .then(res => {
+                removeDeletedBrandFromList()
+                enqueueSnackbar(`${selectedBrand.name} brand has been deleted successfully`, {
+                    variant: 'success',
+                    anchorOrigin: {vertical: 'top', horizontal: 'center'},
+                })
+            })
             .finally(() => toggleLoading(false))
     }
 
     const removeDeletedBrandFromList = () => {
-        const newBrands = brands.filter(brand => brand._id !== selectedBrand._id)
-        setBrands(newBrands)
+        const brandsAfterDelete = brands.filter(brand => brand._id !== selectedBrand._id)
+        setBrands(brandsAfterDelete)
     }
 
     return (
         <>
-            <Alert />
             <Table>
                 <thead>
                     <tr>
                         <th> # </th>
                         <th> Name </th>
                         <th> Description </th>
-                        <th>  </th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,19 +85,15 @@ export default function BrandList({ toggleLoading, newBrand }) {
                                     </div>
                                 </td>
                                 <td>
-                                    <div className='template-demo d-flex justify-content-between flex-nowrap'>
+                                    <div className="template-demo d-flex justify-content-between flex-nowrap">
                                         <button
                                             type="button"
                                             className="btn btn-inverse-danger btn-rounded btn-icon"
-                                            onClick={() => showConfirm(brand)}>
-                                                <i className="mdi menu-icon mdi-trash-can"></i>
+                                            onClick={() => onDelete(brand)}>
+                                            <i className="mdi mdi-trash-can"></i>
                                         </button>
-
-                                        <button
-                                            type="button"
-                                            className="btn btn-inverse-success btn-rounded btn-icon"
-                                            onClick={showConfirm}>
-                                                <i className="mdi menu-icon mdi-content-save-edit"></i>
+                                        <button type="button" className="btn btn-inverse-success btn-rounded btn-icon">
+                                            <i className="mdi mdi-content-save-edit"></i>
                                         </button>
                                     </div>
                                 </td>
