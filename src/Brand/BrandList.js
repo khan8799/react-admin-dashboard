@@ -3,7 +3,7 @@ import Table from '../components/Table';
 import { makeRequest } from './../shared/utilities/httpHelper'
 import { useSnackbar } from 'notistack';
 
-export default function BrandList({ toggleLoading, newBrand }) {
+export default function BrandList({ toggleLoading, newBrand, onEdit }) {
     const [brands, setBrands] = useState([]);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     let selectedBrand = null;
@@ -76,7 +76,7 @@ export default function BrandList({ toggleLoading, newBrand }) {
                 <tbody>
                     {brands.map((brand, index) => {
                         return (
-                            <tr key={ index + 1 }>
+                            <tr key={ brand._id }>
                                 <td> { index + 1 } </td>
                                 <td> { brand.name } </td>
                                 <td>
@@ -92,7 +92,10 @@ export default function BrandList({ toggleLoading, newBrand }) {
                                             onClick={() => onDelete(brand)}>
                                             <i className="mdi mdi-trash-can"></i>
                                         </button>
-                                        <button type="button" className="btn btn-inverse-success btn-rounded btn-icon">
+                                        <button
+                                            type="button"
+                                            className="btn btn-inverse-success btn-rounded btn-icon"
+                                            onClick={() => onEdit(brand)}>
                                             <i className="mdi mdi-content-save-edit"></i>
                                         </button>
                                     </div>

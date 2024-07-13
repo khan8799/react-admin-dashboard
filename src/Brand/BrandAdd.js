@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeRequest } from '../shared/utilities/httpHelper'
 
-export default function BrandAdd({ toggleLoading, onAddBrand }) {
+export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
 	const initialValue = {name: '', description: ''}
 	const [formValues, setFormValues] = useState(initialValue)
+
+	useEffect(() => {
+		if (selectedBrand) {
+			setFormValues({name: selectedBrand.name, description: selectedBrand.description})
+		}
+	}, [selectedBrand])
 
 	const handleChange = (event) => {
 		const {name, value} = event.target
