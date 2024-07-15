@@ -23,7 +23,8 @@ export default function BrandList({ toggleLoading, newBrand, onEdit }) {
             variant: 'error',
             anchorOrigin: {vertical: 'top', horizontal: 'center'},
             action,
-            persist: true
+            persist: true,
+            preventDuplicate: true
         })
     }
 
@@ -52,6 +53,7 @@ export default function BrandList({ toggleLoading, newBrand, onEdit }) {
                 enqueueSnackbar(`${selectedBrand.name} brand has been deleted successfully`, {
                     variant: 'success',
                     anchorOrigin: {vertical: 'top', horizontal: 'center'},
+                    preventDuplicate: true
                 })
             })
             .finally(() => toggleLoading(false))

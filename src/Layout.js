@@ -7,7 +7,7 @@ import { SnackbarProvider } from 'notistack';
 function Layout() {
   return (
     <>
-      <SnackbarProvider>
+      <SnackbarProvider maxSnack={1}>
         <Header />
 
         <div className="container-fluid page-body-wrapper">

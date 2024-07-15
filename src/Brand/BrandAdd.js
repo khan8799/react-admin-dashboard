@@ -21,10 +21,10 @@ export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
-		submit();
+		selectedBrand ? update() : add();
 	}
 
-	const submit = () => {
+	const add = () => {
 		toggleLoading(true)
 		const url = 'brand';
 		const option = {
@@ -41,6 +41,29 @@ export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
 				setFormValues(initialValue)
 			})
 			.finally(() => toggleLoading(false))
+	}
+
+	const update = () => {
+		toggleLoading(true)
+		const url = `brand/${selectedBrand._id}`;
+		const option = {
+			method: 'PUT',
+			body: JSON.stringify({
+				name: formValues.name,
+				description: formValues.description
+			}),
+			headers: {
+                "Content-Type": "application/json",
+            },
+		}
+
+		makeRequest(url, option)
+			.then(res => {
+				onAddBrand(formValues);
+				setFormValues(initialValue)
+			})
+			.finally(() => toggleLoading(false))
+
 	}
 
 	return (
