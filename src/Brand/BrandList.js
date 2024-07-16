@@ -2,20 +2,27 @@ import React, { useEffect, useState } from 'react'
 import Table from '../components/Table';
 import { makeRequest } from './../shared/utilities/httpHelper'
 import { useSnackbar } from 'notistack';
+import Pagination from '../shared/components/Pagination/Pagination';
 
 export default function BrandList({ toggleLoading, newBrand, onEdit }) {
   console.log("brandList ");
 
     const [brands, setBrands] = useState([]);
+    const [pageNo, setPageNo] = useState(1);
+    const [totalItems, setTotalItems] = useState(null);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     let selectedBrand = null;
 
-    useEffect(() => getBrands(), [newBrand])
+    useEffect(() => getBrands(), [newBrand, pageNo])
 
     const getBrands = () => {
         toggleLoading(true)
-        makeRequest('brand')
-            .then(res => setBrands(res.payload))
+        const url = `brand?page=${pageNo}`
+        makeRequest(url)
+            .then(res => {
+                setBrands(res.payload)
+                setTotalItems(res.totalRecords)
+            })
             .finally(() => toggleLoading(false))
     }
 
@@ -66,6 +73,9 @@ export default function BrandList({ toggleLoading, newBrand, onEdit }) {
         setBrands(brandsAfterDelete)
     }
 
+    const handlePageChange = (page) => {
+        setPageNo(page)
+    }
     return (
         <>
             <Table>
@@ -81,7 +91,7 @@ export default function BrandList({ toggleLoading, newBrand, onEdit }) {
                     {brands.map((brand, index) => {
                         return (
                             <tr key={ brand._id }>
-                                <td> { index + 1 } </td>
+                                <td> { index + 1 + (pageNo - 1) * 10} </td>
                                 <td> { brand.name } </td>
                                 <td>
                                     <div  className="w-100 ">
@@ -109,6 +119,9 @@ export default function BrandList({ toggleLoading, newBrand, onEdit }) {
                     })}
                 </tbody>
             </Table>
+            <Pagination
+                totalRecords={totalItems}
+                handlePageChange={handlePageChange}/>
         </>
     )
 }
