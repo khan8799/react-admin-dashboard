@@ -17,10 +17,17 @@ export default function Pagination({totalRecords, handlePageChange}) {
         handlePageChange(pageNo)
     }
 
+    const prev = () => {
+        if (currentPage === 1) return;
+        onPageChange(currentPage - 1)
+    }
+
     return (
         <nav className="mt-4" aria-label="Page navigation example">
             <ul className="pagination justify-content-end">
-                <li className="page-item disabled">
+                <li
+                    className={`page-item ${currentPage === 1 ? 'disabled': ''}`}
+                    onClick={prev}>
                     <a className="page-link" tabIndex="-1">Previous</a>
                 </li>
 
@@ -39,7 +46,7 @@ export default function Pagination({totalRecords, handlePageChange}) {
                     })
                 }
                 
-                <li className="page-item">
+                <li className={`page-item ${pages.length === currentPage ? 'disabled': ''}`}>
                     <a className="page-link">Next</a>
                 </li>
             </ul>
