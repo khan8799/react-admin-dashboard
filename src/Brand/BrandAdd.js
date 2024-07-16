@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { makeRequest } from '../shared/utilities/httpHelper'
 
 export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
+  console.log("brandAdd ");
+
 	const initialValue = {name: '', description: ''}
 	const [formValues, setFormValues] = useState(initialValue)
 

@@ -4,6 +4,8 @@ import { makeRequest } from './../shared/utilities/httpHelper'
 import { useSnackbar } from 'notistack';
 
 export default function BrandList({ toggleLoading, newBrand, onEdit }) {
+  console.log("brandList ");
+
     const [brands, setBrands] = useState([]);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     let selectedBrand = null;
