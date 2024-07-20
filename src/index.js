@@ -8,6 +8,7 @@ import Home from './Home/Home'
 import CategoryList from './Category/CategoryList/CategoryList'
 import ProductList from './Product/ProductList/ProductList';
 import Brand from './Brand/Brand';
+import Coupon from './Coupon/Coupon';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
         <Route index element={<Home />}></Route>
         <Route path="category" element={<CategoryList />}></Route>
         <Route path="brand" element={<Brand />}></Route>
+        <Route path="coupon" element={<Coupon />}></Route>
         <Route path="product" element={<ProductList />}></Route>
       </Route>
       <Route path="/login" element={<Login />}></Route>
