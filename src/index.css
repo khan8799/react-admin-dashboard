@@ -1,5 +1,5 @@
 .w-25 {
-    width: 25%;
+    width: 25% !important;
 }
 
 .w-35 {
@@ -27,4 +27,16 @@
     margin-top: .25rem;
     font-size: .875em;
     color: #dc3545;
+}
+
+.table td {
+    white-space: normal !important;
+    /* vertical-align: top; */
+    padding: 0.5rem 0.8rem;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
