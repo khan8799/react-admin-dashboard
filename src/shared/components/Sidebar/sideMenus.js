@@ -20,6 +20,11 @@ export const sideMenus = [
         iconClass: 'mdi-shopping'
     },
     {
+        name: 'Coupons',
+        path: '/coupons',
+        iconClass: 'mdi-shopping'
+    },
+    {
         name: 'Login',
         path: '/login',
         iconClass: 'mdi-login'
