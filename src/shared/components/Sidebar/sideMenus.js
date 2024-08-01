@@ -15,6 +15,11 @@ export const sideMenus = [
         iconClass: 'mdi-lan'
     },
     {
+        name: 'Branch',
+        path: '/branch',
+        iconClass: 'mdi mdi-bulletin-board'
+    },
+    {
         name: 'Products',
         path: '/product',
         iconClass: 'mdi-shopping'
