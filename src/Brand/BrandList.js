@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Table from '../components/Table';
 import { makeRequest } from './../shared/utilities/httpHelper'
 import { useSnackbar } from 'notistack';
 import Pagination from '../shared/components/Pagination/Pagination';
 
 export default function BrandList({ toggleLoading, newBrand, onEdit }) {
-  console.log("brandList ");
-
     const [brands, setBrands] = useState([]);
     const [pageNo, setPageNo] = useState(1);
+    const [searchText, setSearchText] = useState('');
     const [totalItems, setTotalItems] = useState(null);
+    const searchElement = useRef();
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     let selectedBrand = null;
 
-    useEffect(() => getBrands(), [newBrand, pageNo])
+    useEffect(() => getBrands(), [newBrand, pageNo, searchText])
 
     const getBrands = () => {
         toggleLoading(true)
-        const url = `brand?page=${pageNo}`
+        const url = `brand?page=${pageNo}&searchText=${searchText}`
         makeRequest(url)
             .then(res => {
                 setBrands(res.payload)
@@ -76,8 +76,34 @@ export default function BrandList({ toggleLoading, newBrand, onEdit }) {
     const handlePageChange = (page) => {
         setPageNo(page)
     }
+
+    const handleSearch = () => {
+        setSearchText(searchElement.current.value)
+    }
+
+    const resetSearch = () => {
+        searchElement.current.value = ''
+        setSearchText('')
+    }
     return (
         <>
+            <div className="d-flex mb-2" role="search">
+                <input
+                    ref={searchElement}
+                    type="text"
+                    className="form-control form-control-dark text-bg-dark"
+                    placeholder="Search..."
+                    aria-label="Search"/>
+                <button
+                    type="button"
+                    className="btn btn-inverse-primary me-1"
+                    onClick={handleSearch}>Search</button>
+                <button
+                    type="button"
+                    className="btn btn-inverse-danger"
+                    onClick={resetSearch}>reset</button>
+            </div>
+        
             <Table>
                 <thead>
                     <tr>

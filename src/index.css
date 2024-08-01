@@ -31,7 +31,8 @@
 
 .table td {
     white-space: normal !important;
-    vertical-align: top;
+    /* vertical-align: top; */
+    padding: 0.5rem 0.8rem;
 }
 
 .ellipsis {
