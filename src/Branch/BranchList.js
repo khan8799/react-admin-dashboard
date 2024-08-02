@@ -1,8 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from '../components/Table';
+import { makeRequest } from '../shared/utilities/httpHelper';
+import Pagination from '../shared/components/Pagination/Pagination';
 
 export default function BranchList() {
-    const [branch, setBranch] = useState([]);
+    const [branches, setBranches] = useState([]);
+    const [pageNo, setPageNo] = useState([]);
+    const [totalItems, settotalItems] = useState();
+
+    useEffect(() => getBranch(), [pageNo] )
+
+    const getBranch = () => {
+    const url = `brand?page=$&searchText=$`
+    makeRequest(url)
+    .then(res => {
+        setBranches(res.payload)
+        settotalItems(res.totalRecords)
+        
+    })
+    }
+
+    const handlePageChange = (page) => {
+        setPageNo(page)
+    }
 
     return (
         <>
@@ -30,7 +50,7 @@ export default function BranchList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {branch.map((branch, index) => {
+                    {branches.map((branch, index) => {
                         return (
                             <tr key={ branch._id }>
                                 <td> { index } </td>
@@ -59,6 +79,9 @@ export default function BranchList() {
                     })}
                 </tbody>
             </Table>
+            <Pagination
+                    totalRecords={totalItems}
+                    handlePageChange={handlePageChange}/>
         </>
     )
 }
