@@ -9,6 +9,7 @@ import CategoryList from './Category/CategoryList/CategoryList'
 import ProductList from './Product/ProductList/ProductList';
 import Brand from './Brand/Brand';
 import Coupon from './Coupon/Coupon';
+import Branch from './Branch/Branch';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +21,8 @@ root.render(
         <Route path="brand" element={<Brand />}></Route>
         <Route path="coupon" element={<Coupon />}></Route>
         <Route path="product" element={<ProductList />}></Route>
+        <Route path="branch" element={<Branch />}></Route>
+
       </Route>
       <Route path="/login" element={<Login />}></Route>
     </Routes>
