@@ -3,7 +3,8 @@ import Table from '../components/Table';
 import { makeRequest } from '../shared/utilities/httpHelper';
 import Pagination from '../shared/components/Pagination/Pagination';
 
-export default function BranchList() {
+export default function BranchList({toggleLoading}) {
+
     const [branches, setBranches] = useState([]);
     const [pageNo, setPageNo] = useState([]);
     const [totalItems, settotalItems] = useState();
@@ -11,13 +12,15 @@ export default function BranchList() {
     useEffect(() => getBranch(), [pageNo] )
 
     const getBranch = () => {
-    const url = `brand?page=$&searchText=$`
-    makeRequest(url)
-    .then(res => {
-        setBranches(res.payload)
-        settotalItems(res.totalRecords)
-        
-    })
+        toggleLoading(true)
+        const url = `brand?page=$&searchText=$`
+        makeRequest(url)
+        .then(res => {
+            setBranches(res.payload)
+            settotalItems(res.totalRecords)
+            
+        })
+        .finally(() => toggleLoading(false))
     }
 
     const handlePageChange = (page) => {
