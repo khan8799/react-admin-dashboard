@@ -5,23 +5,23 @@ import { makeRequest } from '../shared/utilities/httpHelper';
 import { closeSnackbar, enqueueSnackbar } from 'notistack';
 
 export default function BranchList({ toggleLoading }) {
-    const [coupons, setCoupon] = useState([])
-    useEffect(() => getCoupons(), [])
+    const [Branches, setBranch] = useState([])
+    useEffect(() => getBranch(), [])
     let selectedCoupon = null;
 
-    const getCoupons = () => {
+    const getBranch = () => {
         toggleLoading(true)
-        const url = `coupon`
+        const url = `branch`
         makeRequest(url)
             .then(res => {
-                setCoupon(res.payload)
+                setBranch(res.payload)
             })
             .finally(() => toggleLoading(false))
     }
 
-    const onDelete = (coupon) => {
-        selectedCoupon = coupon;
-        enqueueSnackbar(`Do you really want to delete ${coupon.name} coupon?`, {
+    const onDelete = (branch) => {
+        selectedCoupon = branch;
+        enqueueSnackbar(`Do you really want to delete ${branch.name} branch?`, {
             variant: 'error',
             anchorOrigin: { vertical: 'top', horizontal: 'center' },
             action,
@@ -35,7 +35,7 @@ export default function BranchList({ toggleLoading }) {
         <>
             <button className="btn btn-sm btn-danger me-2" onClick={() => {
                 closeSnackbar()
-                deleteCoupon()
+                deleteBranch()
             }}>
                 Yes, Delete it
             </button>
@@ -45,7 +45,7 @@ export default function BranchList({ toggleLoading }) {
         </>
     );
 
-    const deleteCoupon = () => {
+    const deleteBranch = () => {
         const url = `coupon/${selectedCoupon._id}`
         makeRequest(url, { method: 'DELETE' })
             .then(res => {
@@ -54,7 +54,7 @@ export default function BranchList({ toggleLoading }) {
                     anchorOrigin: { vertical: 'top', horizontal: 'center' },
                     preventDuplicate: true
                 })
-                getCoupons()
+                getBranch()
             })
     }
 
@@ -84,19 +84,19 @@ export default function BranchList({ toggleLoading }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {coupons.map((coupon, index) => {
+                    {Branches.map((branch, index) => {
                         return (
-                            <tr key={coupon._id}>
+                            <tr key={branch._id}>
                                 <td> {index + 1} </td>
-                                <td> {coupon.name} </td>
+                                <td> {branch.name} </td>
                                 <td>
                                     <div className="w-100 ">
-                                        {coupon.couponCode}
+                                        {branch.location.latitude}
                                     </div>
                                 </td>
                                 <td>
                                     <div className="w-100 ">
-                                        {coupon.couponCode}
+                                        {branch.location.longitude}
                                     </div>
                                 </td>
                                 <td>
@@ -104,7 +104,7 @@ export default function BranchList({ toggleLoading }) {
                                         <button
                                             type="button"
                                             className="btn btn-inverse-danger btn-rounded btn-icon"
-                                            onClick={() => onDelete(coupon)}>
+                                            onClick={() => onDelete(branch)}>
                                             <i className="mdi mdi-trash-can"></i>
                                         </button>
                                         <button
