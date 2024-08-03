@@ -20,6 +20,7 @@ root.render(
         <Route path="category" element={<CategoryList />}></Route>
         <Route path="brand" element={<Brand />}></Route>
         <Route path="coupon" element={<Coupon />}></Route>
+        <Route path="branch" element={<Branch />}></Route>
         <Route path="product" element={<ProductList />}></Route>
         <Route path="branch" element={<Branch />}></Route>
 
