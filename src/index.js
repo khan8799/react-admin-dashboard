@@ -22,6 +22,8 @@ root.render(
         <Route path="coupon" element={<Coupon />}></Route>
         <Route path="branch" element={<Branch />}></Route>
         <Route path="product" element={<ProductList />}></Route>
+        <Route path="branch" element={<Branch />}></Route>
+
       </Route>
       <Route path="/login" element={<Login />}></Route>
     </Routes>

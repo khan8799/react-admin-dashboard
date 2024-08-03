@@ -11,10 +11,9 @@ export default function CouponList({toggleLoading, onEdit, refreshCoupons}) {
     const [pageNo, setPageNo] = useState(1)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const searchElement = useRef()
-
     let selectedCoupon = null;
 
-    useEffect(() => getCoupons(), [searchText, pageNo, refreshCoupons])
+    useEffect(() => {getCoupons()}, [searchText, pageNo, refreshCoupons])
 
     const getCoupons = () => {
         toggleLoading(true)
