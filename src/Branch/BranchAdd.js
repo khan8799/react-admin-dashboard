@@ -2,8 +2,17 @@ import React, { useState } from 'react'
 import { makeRequest } from '../shared/utilities/httpHelper';
 
 export default function BranchAdd({toggleLoading, onAddBranch}) {
-	const initialValue = {name: '', description: ''}
+	const initialValue = {name: '', description: '', description: ''}
 	const [formValues, setFormValues] = useState(initialValue)
+
+
+	const handleChange = (event) => {
+		const {name, value} = event.target
+		setFormValues({
+			...formValues,
+			[name]: value
+		})
+	}
 
 	const add = () => {
 		toggleLoading(true)
@@ -34,7 +43,8 @@ export default function BranchAdd({toggleLoading, onAddBranch}) {
 					className="form-control"
 					id="name"
 					placeholder="Branch"
-					value={formValues.name}/>
+					value={formValues.name}
+					onChange={handleChange}/>
 					
 			</div>
 			<div className="form-group">
@@ -44,7 +54,8 @@ export default function BranchAdd({toggleLoading, onAddBranch}) {
 					type="text"
 					className="form-control"
                     placeholder='eg:20.9,26.4'
-					value={formValues.description}></input>
+					value={formValues.description}
+					onChange={handleChange}></input>
 			</div>
 			<div className="form-group">
 				<label htmlFor="description">Longitude</label>
@@ -53,7 +64,8 @@ export default function BranchAdd({toggleLoading, onAddBranch}) {
 					type="text"
 					className="form-control"
                     placeholder='eg:5,5.5'
-					value={formValues.description}></input>
+					value={formValues.description}
+					onChange={handleChange}></input>
 			</div>
 			<button type="submit" className="btn btn-gradient-primary me-2">Save</button>
 			<button className="btn btn-light">Cancel</button>

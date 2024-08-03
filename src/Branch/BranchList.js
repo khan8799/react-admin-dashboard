@@ -16,7 +16,7 @@ export default function BranchList({toggleLoading}) {
 
     const getBranch = () => {
         toggleLoading(true)
-        const url = `brand?page=$&searchText=$`
+        const url = `branch?page=$&searchText=$`
         makeRequest(url)
         .then(res => {
             setBranches(res.payload)
@@ -56,7 +56,7 @@ export default function BranchList({toggleLoading}) {
     const deleteBranch = () => {
         toggleLoading(true)
         const { _id } = selectedBranch
-        const url = `brand/${_id}`
+        const url = `branch/${_id}`
         makeRequest(url, {method: 'DELETE'})
             .then(res => {
                 removeDeletedBranchFromList()
@@ -100,7 +100,8 @@ export default function BranchList({toggleLoading}) {
                     <tr>
                         <th> # </th>
                         <th> Name </th>
-                        <th> Description </th>
+                        <th> Latitude</th>
+                        <th> Longitude</th>
                         <th> </th>
                     </tr>
                 </thead>
@@ -110,6 +111,8 @@ export default function BranchList({toggleLoading}) {
                             <tr key={ branch._id }>
                                 <td> { index + 1 } </td>
                                 <td> { branch.name } </td>
+                                <td> { branch.latitude } </td>
+                                <td> { branch.longitude} </td>
                                 <td>
                                     <div  className="w-100 ">
                                         { branch.description } 
