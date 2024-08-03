@@ -2,16 +2,18 @@ import { useState, useEffect } from "react";
 import Table from "../components/Table";
 import { makeRequest } from "../shared/utilities/httpHelper";
 
-export default function BranchList() {
+export default function BranchList( {toggleLoading} ) {
     const [branches, setBranches] = useState([])
     useEffect(() => getBranches(), [])
 
     const getBranches = () => {
+        toggleLoading(true)
         const url = `coupon`
         makeRequest(url)
             .then(res => {
                 setBranches(res.payload)
             })
+            .finally(() => toggleLoading(false))
     }
     return (
         <>

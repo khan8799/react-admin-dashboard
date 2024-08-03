@@ -16,7 +16,7 @@ export default function BranchAdd() {
                     name="latitude"
                     type="number"
                     className="form-control"
-                    placeholder="latitude"
+                    placeholder="eg. 65.786 , 76.987"
                 />
             </div>
             <div className="form-group">
@@ -25,7 +25,7 @@ export default function BranchAdd() {
                     name="longitude"
                     type="number"
                     className="form-control"
-                    placeholder="longitude"
+                    placeholder="eg. 35.786 , 96.987"
                 />
             </div>
             <button type="submit" className="btn btn-gradient-primary me-2">Save</button>
