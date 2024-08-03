@@ -9,7 +9,7 @@ export default function BranchList( {toggleLoading} ) {
     const getBranches = () => {
         toggleLoading(true)
         const url = `branch`
-        makeRequest(url)w``
+        makeRequest(url)
             .then(res => {
                 setBranches(res.payload)
             })
