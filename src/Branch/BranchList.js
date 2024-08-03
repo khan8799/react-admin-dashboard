@@ -1,9 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from '../components/Table';
 import Pagination from '../shared/components/Pagination/Pagination';
+import { makeRequest } from '../shared/utilities/httpHelper';
+import { closeSnackbar, enqueueSnackbar } from 'notistack';
 
-function BranchList() {
-    const [branches,] = useState([])
+export default function BranchList({ toggleLoading }) {
+    const [coupons, setCoupon] = useState([])
+    useEffect(() => getCoupons(), [])
+    let selectedCoupon = null;
+
+    const getCoupons = () => {
+        toggleLoading(true)
+        const url = `coupon`
+        makeRequest(url)
+            .then(res => {
+                setCoupon(res.payload)
+            })
+            .finally(() => toggleLoading(false))
+    }
+
+    const onDelete = (coupon) => {
+        selectedCoupon = coupon;
+        enqueueSnackbar(`Do you really want to delete ${coupon.name} coupon?`, {
+            variant: 'error',
+            anchorOrigin: { vertical: 'top', horizontal: 'center' },
+            action,
+            persist: true,
+            preventDuplicate: true
+        })
+    }
+
+    const action = () => (
+
+        <>
+            <button className="btn btn-sm btn-danger me-2" onClick={() => {
+                closeSnackbar()
+                deleteCoupon()
+            }}>
+                Yes, Delete it
+            </button>
+            <button className="btn btn-sm btn-success" onClick={() => closeSnackbar()}>
+                No
+            </button>
+        </>
+    );
+
+    const deleteCoupon = () => {
+        const url = `coupon/${selectedCoupon._id}`
+        makeRequest(url, { method: 'DELETE' })
+            .then(res => {
+                enqueueSnackbar(`${selectedCoupon.name} coupon has been deleted successfully`, {
+                    variant: 'success',
+                    anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                    preventDuplicate: true
+                })
+                getCoupons()
+            })
+    }
+
     return (
         <>
             <div className="d-flex mb-2" role="search">
@@ -25,30 +79,32 @@ function BranchList() {
                     <tr>
                         <th> # </th>
                         <th> Name </th>
-                        <th> Branch Code </th>
-                        <th> Discount </th>
-                        <th> </th>
+                        <th> Latitude </th>
+                        <th> Longitude </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {branches.map((branch, index) => {
+                    {coupons.map((coupon, index) => {
                         return (
-                            <tr key={branch._id}>
+                            <tr key={coupon._id}>
                                 <td> {index + 1} </td>
-                                <td> {branch.name} </td>
+                                <td> {coupon.name} </td>
                                 <td>
                                     <div className="w-100 ">
-                                        {branch.branchCode}
+                                        {coupon.couponCode}
                                     </div>
                                 </td>
                                 <td>
-                                    {branch.type === 'fixed' ? `${branch.discount}$` : `${branch.discount}%`}
+                                    <div className="w-100 ">
+                                        {coupon.couponCode}
+                                    </div>
                                 </td>
                                 <td>
                                     <div className="template-demo d-flex justify-content-between flex-nowrap">
                                         <button
                                             type="button"
-                                            className="btn btn-inverse-danger btn-rounded btn-icon">
+                                            className="btn btn-inverse-danger btn-rounded btn-icon"
+                                            onClick={() => onDelete(coupon)}>
                                             <i className="mdi mdi-trash-can"></i>
                                         </button>
                                         <button
@@ -63,9 +119,7 @@ function BranchList() {
                     })}
                 </tbody>
             </Table>
-            <Pagination/>
+            <Pagination />
         </>
     )
-}
-
-export default BranchList;
+};
