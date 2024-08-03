@@ -6,8 +6,8 @@ import { useState } from "react";
 import Loader from "../shared/components/Loader/Loader";
 
 export default function Branch(){
-    const [loading, toggleLoading] = useState()
-    
+    const [loading, toggleLoading] = useState(false)
+
     const changeLoadingState = (state) => {
         toggleLoading(state)
     }

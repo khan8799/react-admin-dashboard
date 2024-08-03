@@ -8,12 +8,15 @@ export default function BranchList( {toggleLoading} ) {
 
     const getBranches = () => {
         toggleLoading(true)
-        const url = `coupon`
+        const url = `branch`
         makeRequest(url)
             .then(res => {
                 setBranches(res.payload)
             })
             .finally(() => toggleLoading(false))
+    }
+    const onDelete = () => {
+        console.log('delete');
     }
     return (
         <>
@@ -35,12 +38,28 @@ export default function BranchList( {toggleLoading} ) {
                                 <td>{branch.name}  </td>
                                 <td>
                                     <div className="w-100 ">
-                                        {branch.couponCode}
+                                        {branch.location.latitude}
                                     </div>
                                 </td>
                                 <td>
                                 <div className="w-100 ">
-                                        {branch.couponCode}
+                                        {branch.location.longitude}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="template-demo d-flex justify-content-between flex-nowrap">
+                                        <button
+                                            type="button"
+                                            className="btn btn-inverse-danger btn-rounded btn-icon"
+                                            onClick={() => onDelete(branch)}>
+                                            <i className="mdi mdi-trash-can"></i>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-inverse-success btn-rounded btn-icon"
+                                            >
+                                            <i className="mdi mdi-content-save-edit"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

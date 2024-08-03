@@ -1,6 +1,10 @@
 export default function BranchAdd() {
+    const handleSubmit = (event) => {
+        event.preventDefault();
+      }
+    
     return (
-        <form className="forms-sample" >
+        <form className="forms-sample" onSubmit={handleSubmit} >
             <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input
