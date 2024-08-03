@@ -6610,7 +6610,7 @@ textarea.form-control-lg {
   z-index: 1050;
   width: 100vw;
   height: 100vh;
-  background-color: #000000; }
+  background-color: rgba(0, 0, 0, 0.05); }
   .modal-backdrop.fade {
     opacity: 0; }
   .modal-backdrop.show {
@@ -14447,4 +14447,27 @@ dl {
   -ms-flex-positive: 1;
   flex-grow: 1; }
 
+.form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.50); 
+}
+
+.form {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    width: 50vw;
+    border-radius: 10px;
+    justify-content: center;
+    height: 100vh;
+}
 /*# sourceMappingURL=style.css.map */
