@@ -3,17 +3,23 @@ import { useSnackbar } from 'notistack';
 import { makeRequest } from '../shared/utilities/httpHelper';
 import { useEffect, useState } from "react";
 import AddBranch from "./AddBranch";
+import Loader from "../shared/components/Loader/Loader";
 
 
-function BranchList ({branch, getBranch, isAddBranchValue}) {
+function BranchList ({branch, getBranch}) {
 
+    const [loading, setLoading] = useState(false)
+    const [branchList, setBranchList] = useState(branch)
     const [selectedEditBranchValues, setSelectedEditBranchValues] = useState()
     const [isEditBranchFormActive, setIsEditBranchFormActive] = useState(false)
+    const [selecteBranchIndex, setSelecteBranchIndex] = useState(null )
+
+    useEffect(() => setBranchList(branch),[branch])
     
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     let branchDetail = {};
-
+    
     // DELETE BRANCH
 
     const handleDelete = (name, id) => {
@@ -43,34 +49,51 @@ function BranchList ({branch, getBranch, isAddBranchValue}) {
     );
 
     const deleteBranch = () => {
+        setLoading(true)
         const url = `coupon/${branchDetail.id}`
         makeRequest(url, {method: 'DELETE'})
             .then(res => {
-                enqueueSnackbar(`${branchDetail.name} coupon has been deleted successfully`, {
+                removeDelBranchFromList()
+                enqueueSnackbar(`" ${branchDetail.name} " Branch has been deleted successfully`, {
                     variant: 'success',
                     anchorOrigin: {vertical: 'top', horizontal: 'center'},
                     preventDuplicate: true
                 })
-                getBranch()
-            })
+            })  
+        .finally(() => setLoading(false))      
+    };
+
+    const removeDelBranchFromList = () => {
+        const removeIteam = branchList.filter((elem) => {
+            return (elem._id !== branchDetail.id)
+        })
+        
+        setBranchList(removeIteam)
     }
 
     // DELETE BRANCH
 
-
-    const editBranchForm = (selectedBranch) => {
-        setSelectedEditBranchValues(selectedBranch);    
-        setIsEditBranchFormActive(!isEditBranchFormActive)
-        console.log('cancle edit');
+    const editBranchForm = (selectedBranch, index) => {
+        setSelecteBranchIndex(index)
         
+        setSelectedEditBranchValues(selectedBranch);
+        setIsEditBranchFormActive(!isEditBranchFormActive)        
     }
 
-    console.log('branch list');
-
+    const addEditBranchInList = (name, latitude, longitude) => {
+        let selectedEditBranch = [...branchList]
+        
+        selectedEditBranch[selecteBranchIndex].name = name;
+        selectedEditBranch[selecteBranchIndex].location.latitude = latitude;
+        selectedEditBranch[selecteBranchIndex].location.longitude = longitude;
+    }
+ 
     return(
         <>
 
-            {isEditBranchFormActive && <AddBranch getBranch={getBranch} selectedEditBranchValues={selectedEditBranchValues} isEditBranchFormActive={editBranchForm}/>}
+            {loading && <Loader/>}
+
+            {isEditBranchFormActive && <AddBranch getBranch={getBranch} selectedEditBranchValues={selectedEditBranchValues} isEditBranchFormActive={editBranchForm} addEditBranchInList={addEditBranchInList}/>}
 
             <Table>
                 <thead>
@@ -84,13 +107,13 @@ function BranchList ({branch, getBranch, isAddBranchValue}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {branch.map((list, index) => {
+                    {branchList.map((list, index) => {
                         return(
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{list.name}</td>
-                                <td>{list.couponCode}</td>
-                                <td>{list.couponCode}</td>
+                                <td>{list.location.latitude}</td>
+                                <td>{list.location.longitude}</td>
                                 <td>
                                     <div className="template-demo d-flex justify-content-between flex-nowrap">
                                         <button
@@ -104,7 +127,7 @@ function BranchList ({branch, getBranch, isAddBranchValue}) {
                                 <td>
                                     <div className="template-demo d-flex justify-content-between flex-nowrap">
                                         <button
-                                            onClick={() => editBranchForm(list)}
+                                            onClick={() => editBranchForm(list, index)}
                                             type="button"
                                             className="btn btn-inverse-success btn-rounded btn-icon">
                                             <i className="mdi mdi-content-save-edit"></i>
