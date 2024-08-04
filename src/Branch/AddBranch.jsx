@@ -3,41 +3,46 @@ import { makeRequest } from '../shared/utilities/httpHelper';
 import { useSnackbar } from 'notistack';
 
 
-function AddBranch ({getBranch, selectedEditBranchValues, isAddBranchFormActive, isEditBranchFormActive}) {
+function AddBranch ({getBranch, selectedEditBranchValues, isAddBranchFormActive, isEditBranchFormActive, addNewBranchInList, addEditBranchInList}) {
     
     const { enqueueSnackbar } = useSnackbar();
 
     let formValues = {}
 
+    console.log(selectedEditBranchValues);
+    
+
     const branchName = useRef('')
-    const longitude = useRef(0)
-    const latitude = useRef(0)
+    const longitude = useRef(null)
+    const latitude = useRef(null)
 
     // ADD NEW BRANCH
 
     const addBranch = () => {
         const branchDetail = {
             name: branchName.current.value,
-            longitude: Number(longitude.current.value),
-            latitude: Number(latitude.current.value),
+            location: {
+                latitude: Number(latitude.current.value),
+                longitude: Number(longitude.current.value)
+            }
         }
         
-        console.log(branchDetail);
-
-        makeRequest('coupon', {
+        makeRequest('branch', {
           method: 'POST',
           body: JSON.stringify(branchDetail),
           headers: {
             "Content-Type": "application/json",
           },
         })
-        .then(res => { 
+        .then(res => {
+            isAddBranchFormActive()
           enqueueSnackbar(`Branch has been created successfully`, {
             variant: 'success',
             anchorOrigin: {vertical: 'top', horizontal: 'center'},
             preventDuplicate: true
           })
         })
+        .finally(() => {addNewBranchInList(branchDetail)})
     }
 
     // EDIT BRNACH
@@ -48,7 +53,6 @@ function AddBranch ({getBranch, selectedEditBranchValues, isAddBranchFormActive,
             longitude: Number(longitude.current.value),
             latitude: Number(latitude.current.value),
         }
-        console.log(formValues);
         
         const url = `coupon/${selectedEditBranchValues._id}`
             makeRequest(url, {
@@ -60,13 +64,13 @@ function AddBranch ({getBranch, selectedEditBranchValues, isAddBranchFormActive,
         })
         .then(res => {
             isEditBranchFormActive()
-            getBranch()
             enqueueSnackbar(`${selectedEditBranchValues.name} Coupon has been updated successfully`, {
                 variant: 'success',
                 anchorOrigin: {vertical: 'top', horizontal: 'center'},
                 preventDuplicate: true
             })
-        })        
+        })   
+        .finally(() => {addEditBranchInList(formValues.name, formValues.latitude, formValues.longitude)})     
     }
 
     // HANDLE SAVE BUTTON
@@ -87,27 +91,30 @@ function AddBranch ({getBranch, selectedEditBranchValues, isAddBranchFormActive,
                         type="text"
                         className="form-control"
                         placeholder="Ex. Allahbad, uttar pradesh"
-                        ref={branchName}/>
+                        ref={branchName}
+                        defaultValue={selectedEditBranchValues ? selectedEditBranchValues.name : ''}/>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="couponCode">Longitude</label>
                     <input
                         name="Longitude"
-                        type="number"
+                        type="text"
                         className="form-control"
                         placeholder="Longitude"
-                        ref={longitude}/>
+                        ref={longitude}
+                        defaultValue={selectedEditBranchValues ? selectedEditBranchValues.location.longitude : ''}/>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="couponCode">Latitude</label>
                     <input
                         name="Latitude"
-                        type="number"
+                        type="text"
                         className="form-control"
                         placeholder="Latitude"
-                        ref={latitude}/>
+                        ref={latitude}
+                        defaultValue={selectedEditBranchValues ? selectedEditBranchValues.location.latitude : ''}/>
                 </div>
 
                 <button type="submit" className="btn btn-gradient-primary me-2" onClick={handleSave}>

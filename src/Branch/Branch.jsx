@@ -6,37 +6,38 @@ import { useEffect, useState } from 'react'
 import { makeRequest } from '../shared/utilities/httpHelper';
 import Loader from '../shared/components/Loader/Loader'
 
-
-
 function Branch () {
     
-    const [loading, toggleLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [branch, setBranch] = useState([])
     const [isAddBranchFormActive, setIsAddBranchFormActive] = useState(false)
 
     useEffect(() => getBranch(), [])
 
     const getBranch = () => {
-        toggleLoading(true)
-        const url = `coupon`
+        setLoading(true)
+        const url = `branch`
         makeRequest(url)
         .then(res => {
             setBranch(res.payload)
         })
-        .finally(() => toggleLoading(false))
+        .finally(() => setLoading(false))
     }
 
     const addBranchForm = () => {
         setIsAddBranchFormActive(!isAddBranchFormActive)
     }
 
-    console.log('branch');
+    const addNewBranchInList = (newBranch) => {
+        setBranch([newBranch, ...branch]);
+    }
 
     return (
         <>
+            <div className="content">
             <Breadcrumb name="Branch" />
 
-            {isAddBranchFormActive && <AddBranch isAddBranchFormActive={addBranchForm}/>}
+            {isAddBranchFormActive && <AddBranch isAddBranchFormActive={addBranchForm} addNewBranchInList={addNewBranchInList}/>}
 
             {loading && <Loader />}
 
@@ -45,10 +46,11 @@ function Branch () {
             <div className="row">
                 <div className="grid-margin stretch-card">
                     <Card title="Branch">
-                        <BranchList branch={branch} getBranch={getBranch} />
+                        <BranchList branch={branch} getBranch={getBranch}/>
                     </Card>
                 </div>
 
+            </div>
             </div>
         </>
     )
