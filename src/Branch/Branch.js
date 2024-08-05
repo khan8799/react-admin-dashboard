@@ -7,8 +7,8 @@ import BranchAdd from './BranchAdd'
 
 export default function Branch() {
     const [isLoading, setIsLoading] = useState(false)
-    const [newBrand, setNewBrand] = useState(null)
-    const [selectedBrand, setSelectedBrand] = useState()
+    const [newBranch, setnewBranch] = useState(null)
+    const [selectedBranch, setSelectedBranch] = useState()
 
     return (
         <>
@@ -21,16 +21,16 @@ export default function Branch() {
                     <Card title="Branch">
                         <BranchList
                             toggleLoading={setIsLoading}
-                            newBrand={newBrand}
-                            onEdit={setSelectedBrand}/>
+                            newBranch={newBranch}
+                            onEdit={setSelectedBranch}/>
                     </Card>
                 </div>
                 <div className="col-md-5 grid-margin stretch-card">
                     <Card title="Add Branch">
                         <BranchAdd
                             toggleLoading={setIsLoading}
-                            onAddBrand={setNewBrand}
-                            selectedBrand={selectedBrand}/>
+                            onAddBranch={setnewBranch}
+                            selectedBranch={selectedBranch}/>
                     </Card>
                 </div>
             </div>
