@@ -50,7 +50,8 @@ function BranchList ({branch, getBranch}) {
 
     const deleteBranch = () => {
         setLoading(true)
-        const url = `coupon/${branchDetail.id}`
+        const url = `branch/${branchDetail.id}`
+        
         makeRequest(url, {method: 'DELETE'})
             .then(res => {
                 removeDelBranchFromList()
@@ -71,7 +72,7 @@ function BranchList ({branch, getBranch}) {
         setBranchList(removeIteam)
     }
 
-    // DELETE BRANCH
+    // EDIT BRANCH
 
     const editBranchForm = (selectedBranch, index) => {
         setSelecteBranchIndex(index)
@@ -87,7 +88,7 @@ function BranchList ({branch, getBranch}) {
         selectedEditBranch[selecteBranchIndex].location.latitude = latitude;
         selectedEditBranch[selecteBranchIndex].location.longitude = longitude;
     }
- 
+
     return(
         <>
 
