@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Table from '../components/Table';
 import { makeRequest } from '../shared/utilities/httpHelper';
 import { useSnackbar } from 'notistack';
@@ -7,16 +7,18 @@ import Pagination from '../shared/components/Pagination/Pagination';
 export default function BranchList({toggleLoading}) {
 
     const [branches, setBranches] = useState([]);
-    const [pageNo, setPageNo] = useState([]);
+    const [pageNo, setPageNo] = useState(1);
     const [totalItems, settotalItems] = useState();
+    const [searchText, setSearchText] = useState('')
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const searchElement = useRef()
     let selectedBranch = null;
 
-    useEffect(() => getBranch(), [pageNo] )
+    useEffect(() => {getBranch()}, [searchText, pageNo] )
 
     const getBranch = () => {
         toggleLoading(true)
-        const url = `branch?page=$&searchText=$`
+        const url = `branch?page=${pageNo}&searchText=${searchText}`
         makeRequest(url)
         .then(res => {
             setBranches(res.payload)
@@ -66,8 +68,19 @@ export default function BranchList({toggleLoading}) {
                     preventDuplicate: true,
                     persist: false
                 })
+                getBranch()
             })
             .finally(() => toggleLoading(false))
+    }
+
+    const onSearch = () => {
+        setPageNo(1);
+        setSearchText(searchElement.current.value)
+    }
+
+    const onReset = () => {
+        searchElement.current.value = ''
+        setSearchText('')
     }
     
     const removeDeletedBranchFromList = () => {
@@ -83,16 +96,19 @@ export default function BranchList({toggleLoading}) {
         <>
             <div className="d-flex mb-2" role="search">
                 <input
+                    ref={searchElement}
                     type="text"
                     className="form-control form-control-dark text-bg-dark"
                     placeholder="Search..."
                     aria-label="Search"/>
                 <button
                     type="button"
-                    className="btn btn-inverse-primary me-1">Search</button>
+                    className="btn btn-inverse-primary me-1"
+                    onClick={onSearch}>Search</button>
                 <button
                     type="button"
-                    className="btn btn-inverse-danger">reset</button>
+                    className="btn btn-inverse-danger"
+                    onClick={onReset}>reset</button>
             </div>
         
             <Table>
@@ -109,13 +125,13 @@ export default function BranchList({toggleLoading}) {
                     {branches.map((branch, index) => {
                         return (
                             <tr key={ branch._id }>
-                                <td> { index + 1 } </td>
+                                <td> {  index + 1 + ((pageNo - 1) * 10)  } </td>
                                 <td> { branch.name } </td>
-                                <td> { branch.latitude } </td>
-                                <td> { branch.longitude} </td>
+                                <td> { branch.location.latitude } </td>
+                                <td> { branch.location.longitude} </td>
                                 <td>
                                     <div  className="w-100 ">
-                                        { branch.description } 
+                                        
                                     </div>
                                 </td>
                                 <td>
