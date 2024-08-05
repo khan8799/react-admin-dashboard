@@ -7,7 +7,7 @@ import { closeSnackbar, enqueueSnackbar } from 'notistack';
 export default function BranchList({ toggleLoading }) {
     const [Branches, setBranch] = useState([])
     useEffect(() => getBranch(), [])
-    let selectedCoupon = null;
+    let selectedBranch = null;
 
     const getBranch = () => {
         toggleLoading(true)
@@ -20,7 +20,7 @@ export default function BranchList({ toggleLoading }) {
     }
 
     const onDelete = (branch) => {
-        selectedCoupon = branch;
+        selectedBranch = branch;
         enqueueSnackbar(`Do you really want to delete ${branch.name} branch?`, {
             variant: 'error',
             anchorOrigin: { vertical: 'top', horizontal: 'center' },
@@ -46,10 +46,10 @@ export default function BranchList({ toggleLoading }) {
     );
 
     const deleteBranch = () => {
-        const url = `coupon/${selectedCoupon._id}`
+        const url = `branch/${selectedBranch._id}`
         makeRequest(url, { method: 'DELETE' })
             .then(res => {
-                enqueueSnackbar(`${selectedCoupon.name} coupon has been deleted successfully`, {
+                enqueueSnackbar(`${selectedBranch.name} branch has been deleted successfully`, {
                     variant: 'success',
                     anchorOrigin: { vertical: 'top', horizontal: 'center' },
                     preventDuplicate: true
