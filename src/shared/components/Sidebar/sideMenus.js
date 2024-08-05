@@ -15,6 +15,10 @@ export const sideMenus = [
         iconClass: 'mdi-lan'
     },
     {
+        name: 'Branch',
+        path: '/branch',
+        iconClass: 'mdi mdi-bulletin-board'
+    }
         name: 'Coupons',
         path: '/coupon',
         iconClass: 'mdi-lan'
@@ -23,11 +27,6 @@ export const sideMenus = [
         name: 'Products',
         path: '/product',
         iconClass: 'mdi-shopping'
-    },
-    {
-        name: 'Branch',
-        path: '/branch',
-        iconClass: 'mdi-lan'
     },
     {
         name: 'Login',

@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { makeRequest } from "../shared/utilities/httpHelper";
 
-export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
-  const initialValue = { name: "", description: "" };
+export default function BranchAdd({
+  toggleLoading,
+  onAddBranch,
+  selectedBranch,
+}) {
+  console.log("BranchAdd ");
+
+  const initialValue = { name: "", longitude: "", latitude: "" };
   const [formValues, setFormValues] = useState(initialValue);
 
   useEffect(() => {
-    if (selectedBrand) {
+    if (selectedBranch) {
       setFormValues({
-        name: selectedBrand.name,
-        description: selectedBrand.description,
+        name: selectedBranch.name,
+        longitude: selectedBranch.location.longitude,
+        latitude: selectedBranch.location.latitude,
       });
     }
-  }, [selectedBrand]);
+  }, [selectedBranch]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,15 +31,22 @@ export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    selectedBrand ? update() : add();
+    selectedBranch ? update() : add();
   };
 
   const add = () => {
     toggleLoading(true);
-    const url = "brand";
+    const url = "branch";
+		const data ={
+			name: formValues.name,
+			location: {
+				latitude: formValues.latitude,
+				longitude: formValues.longitude
+			}
+		}
     const option = {
       method: "POST",
-      body: JSON.stringify(formValues),
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
@@ -40,7 +54,7 @@ export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
 
     makeRequest(url, option)
       .then((res) => {
-        onAddBrand(formValues);
+        onAddBranch(formValues);
         setFormValues(initialValue);
       })
       .finally(() => toggleLoading(false));
@@ -48,13 +62,17 @@ export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
 
   const update = () => {
     toggleLoading(true);
-    const url = `brand/${selectedBrand._id}`;
+    const url = `branch/${selectedBranch._id}`;
+		const data ={
+			name: formValues.name,
+			location: {
+				latitude: formValues.latitude,
+				longitude: formValues.longitude
+			}
+		}
     const option = {
       method: "PUT",
-      body: JSON.stringify({
-        name: formValues.name,
-        description: formValues.description,
-      }),
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
@@ -62,7 +80,7 @@ export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
 
     makeRequest(url, option)
       .then((res) => {
-        onAddBrand(formValues);
+        onAddBranch(formValues);
         setFormValues(initialValue);
       })
       .finally(() => toggleLoading(false));
@@ -83,15 +101,28 @@ export default function BrandAdd({ toggleLoading, onAddBrand, selectedBrand }) {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="description">Description</label>
-        <textarea
-          name="description"
+        <label htmlFor="name">longitude</label>
+        <input
+          name="longitude"
+          type="number"
           className="form-control"
-          id="description"
-          rows="4"
-          value={formValues.description}
+          id="longitude"
+          placeholder="longitude"
+          value={formValues.longitude}
           onChange={handleChange}
-        ></textarea>
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="name">latitude</label>
+        <input
+          name="latitude"
+          type="number"
+          className="form-control"
+          id="name"
+          placeholder="latitude"
+          value={formValues.latitude}
+          onChange={handleChange}
+        />
       </div>
       <button type="submit" className="btn btn-gradient-primary me-2">
         Save
