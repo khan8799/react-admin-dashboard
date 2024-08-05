@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { makeRequest } from '../shared/utilities/httpHelper';
 
 export default function BranchAdd({toggleLoading, onAddBranch}) {
-	const initialValue = {name: '', description: '', description: ''}
+	const initialValue = {name: '', latitude: '', longitude: ''}
 	const [formValues, setFormValues] = useState(initialValue)
 
 
@@ -13,13 +13,25 @@ export default function BranchAdd({toggleLoading, onAddBranch}) {
 			[name]: value
 		})
 	}
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		toggleLoading(true);
+		// selectedCoupon ? updateCoupon() : addCoupon()
+		add()
+	  }
 
 	const add = () => {
-		toggleLoading(true)
 		const url = 'branch';
+		const data = {
+			name:formValues.name,
+			location:{
+				latitude:formValues.latitude,
+				longitude:formValues.longitude
+			}
+		}
 		const option = {
 			method: 'POST',
-			body: JSON.stringify(formValues),
+			body: JSON.stringify(data),
 			headers: {
                 "Content-Type": "application/json",
             },
@@ -27,14 +39,14 @@ export default function BranchAdd({toggleLoading, onAddBranch}) {
 
 		makeRequest(url, option)
 			.then(res => {
-				onAddBranch(formValues);
+				// onAddBranch(formValues);
 				setFormValues(initialValue)
 			})
 			.finally(() => toggleLoading(false))
 	}
 
     return (
-		<form className="forms-sample">
+		<form className="forms-sample" onSubmit={handleSubmit}>
 			<div className="form-group">
 				<label htmlFor="name">Name</label>
 				<input
@@ -50,21 +62,21 @@ export default function BranchAdd({toggleLoading, onAddBranch}) {
 			<div className="form-group">
 				<label htmlFor="description">Latitude</label>
 				<input
-					name="description"
+					name="latitude"
 					type="text"
 					className="form-control"
                     placeholder='eg:20.9,26.4'
-					value={formValues.description}
+					value={formValues.latitude}
 					onChange={handleChange}></input>
 			</div>
 			<div className="form-group">
 				<label htmlFor="description">Longitude</label>
 				<input
-					name="description"
+					name="longitude"
 					type="text"
 					className="form-control"
                     placeholder='eg:5,5.5'
-					value={formValues.description}
+					value={formValues.longitude}
 					onChange={handleChange}></input>
 			</div>
 			<button type="submit" className="btn btn-gradient-primary me-2">Save</button>
