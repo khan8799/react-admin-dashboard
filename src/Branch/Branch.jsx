@@ -10,14 +10,14 @@ function Branch () {
     
     const [loading, setLoading] = useState(false)
     const [branch, setBranch] = useState([])
-    const [branchList, setBranchList] = useState(branch)
+    const [branchList, setBranchList] = useState([])
     const [isAddBranchFormActive, setIsAddBranchFormActive] = useState(false)
-    
-    const search = useRef('')
 
     useEffect(() => getBranch(), [])
 
     useEffect(() => setBranchList(branch),[branch])
+
+    const search = useRef('')
 
     const getBranch = () => {
         setLoading(true)
@@ -41,11 +41,13 @@ function Branch () {
         const filterBranch = branch.filter((list) => list.name.toLowerCase().includes(search.current.value.toLowerCase()))
         console.log(filterBranch);
         setBranchList(filterBranch);
+        search.current.value = ''
     }
+
+    const allList = () => setBranchList(branch)
 
     return (
         <>
-            <div className="content">
             <Breadcrumb name="Branch" />
 
             {isAddBranchFormActive && <AddBranch isAddBranchFormActive={addBranchForm} addNewBranchInList={addNewBranchInList}/>}
@@ -54,7 +56,9 @@ function Branch () {
 
             <button onClick={() => addBranchForm()} className='btn btn-gradient-primary mb-3'> Add Branch</button>
 
-            <div className="searchBar">
+            <div className="filter">
+                <button onClick={() => allList()}>All</button>
+        
                 <input ref={search} type="text" placeholder='Search Branch'/>
                 <button onClick={() => searchBranch()} className='mdi mdi-magnify'></button>
             </div>
@@ -62,11 +66,10 @@ function Branch () {
             <div className="row">
                 <div className="grid-margin stretch-card">
                     <Card title="Branch">
-                        <BranchList branch={branchList} getBranch={getBranch}/>
+                        <BranchList branch={branchList} setBranchList={setBranchList}/>
                     </Card>
                 </div>
 
-            </div>
             </div>
         </>
     )

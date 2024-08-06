@@ -10,9 +10,11 @@ function Header() {
                 <a className="navbar-brand brand-logo-mini"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
             </div>
             <div className="navbar-menu-wrapper d-flex align-items-stretch">
+                
                 <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                 <span className="mdi mdi-menu"></span>
                 </button>
+
                 <div className="search-field d-none d-md-block">
                 <form className="d-flex align-items-center h-100" action="#">
                     <div className="input-group">

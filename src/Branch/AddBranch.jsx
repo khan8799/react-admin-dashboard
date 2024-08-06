@@ -1,26 +1,40 @@
 import { useRef } from "react"
 import { makeRequest } from '../shared/utilities/httpHelper';
 import { useSnackbar } from 'notistack';
+import { branchFormFeild } from '../shared/utilities/formsFeildList'
 
 
-function AddBranch ({getBranch, selectedEditBranchValues, isAddBranchFormActive, isEditBranchFormActive, addNewBranchInList, addEditBranchInList}) {
+function AddBranch ({ selectedEditBranchValues, isAddBranchFormActive, isEditBranchFormActive, addNewBranchInList, addEditBranchInList}) {
     
     const { enqueueSnackbar } = useSnackbar();
 
-    let formValues = {}
-
-    console.log(selectedEditBranchValues);
-    
+    let formValues = {}    
 
     const branchName = useRef('')
-    const longitude = useRef(null)
-    const latitude = useRef(null)
+    const address = useRef('') 
+    const landmark = useRef('') 
+    const locality = useRef('') 
+    const city = useRef('')
+    const state = useRef('')
+    const pincode = useRef('')
+    const longitude = useRef('') 
+    const latitude = useRef('')
 
+    const useRefList = [branchName, address, landmark, locality, city, state, pincode, longitude, latitude]
+    
+    const editBranchValue = [selectedEditBranchValues?.name, selectedEditBranchValues?.address, selectedEditBranchValues?.landmark, selectedEditBranchValues?.locality, selectedEditBranchValues?.city, selectedEditBranchValues?.state, selectedEditBranchValues?.pincode, selectedEditBranchValues?.location?.longitude, selectedEditBranchValues?.location?.latitude]
+    
     // ADD NEW BRANCH
 
     const addBranch = () => {
         const branchDetail = {
             name: branchName.current.value,
+            address: address.current.value,
+            landmark: landmark.current.value,
+            locality: locality.current.value,
+            city: city.current.value,
+            state: state.current.value,
+            pincode: Number(pincode.current.value),
             location: {
                 latitude: Number(latitude.current.value),
                 longitude: Number(longitude.current.value)
@@ -81,42 +95,27 @@ function AddBranch ({getBranch, selectedEditBranchValues, isAddBranchFormActive,
 
     return(
         <>
-            <div className="form-container ">
-            <form className="form" onSubmit={(e) => e.preventDefault()}>
+            <div className="form-container">
+            <form className="form overflow-auto" onSubmit={(e) => e.preventDefault()}>
             {selectedEditBranchValues ? <h3 className="mb-4">{`Edit ${selectedEditBranchValues.name} Branch`}</h3> : ''}
-                <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                        name="name"
-                        type="text"
-                        className="form-control"
-                        placeholder="Ex. Allahbad, uttar pradesh"
-                        ref={branchName}
-                        defaultValue={selectedEditBranchValues ? selectedEditBranchValues.name : ''}/>
-                </div>
 
-                <div className="form-group">
-                    <label htmlFor="couponCode">Longitude</label>
-                    <input
-                        name="Longitude"
-                        type="text"
-                        className="form-control"
-                        placeholder="Longitude"
-                        ref={longitude}
-                        defaultValue={selectedEditBranchValues ? selectedEditBranchValues.location.longitude : ''}/>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="couponCode">Latitude</label>
-                    <input
-                        name="Latitude"
-                        type="text"
-                        className="form-control"
-                        placeholder="Latitude"
-                        ref={latitude}
-                        defaultValue={selectedEditBranchValues ? selectedEditBranchValues.location.latitude : ''}/>
-                </div>
-
+                {branchFormFeild.map((list, i) => {
+                    // let ref = list.ref
+                    
+                    return(
+                        <div className="form-group">
+                            <label htmlFor="name">{list.name}</label>
+                            <input
+                                name={list.name}
+                                type="text"
+                                className="form-control"
+                                placeholder={list.placeholder}
+                                ref={useRefList[i]}
+                                defaultValue={selectedEditBranchValues ? editBranchValue[i] : ''}/>
+                        </div>
+                    )
+                })}
+                
                 <button type="submit" className="btn btn-gradient-primary me-2" onClick={handleSave}>
                     {isAddBranchFormActive ? 'Save' : 'Edit'}
                 </button>

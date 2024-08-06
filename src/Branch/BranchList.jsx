@@ -1,20 +1,17 @@
 import Table from "../components/Table"
 import { useSnackbar } from 'notistack';
 import { makeRequest } from '../shared/utilities/httpHelper';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddBranch from "./AddBranch";
 import Loader from "../shared/components/Loader/Loader";
 
 
-function BranchList ({branch, getBranch}) {
+function BranchList ({branch, setBranchList}) {
 
     const [loading, setLoading] = useState(false)
-    const [branchList, setBranchList] = useState(branch)
     const [selectedEditBranchValues, setSelectedEditBranchValues] = useState()
     const [isEditBranchFormActive, setIsEditBranchFormActive] = useState(false)
     const [selecteBranchIndex, setSelecteBranchIndex] = useState(null )
-
-    useEffect(() => setBranchList(branch),[branch])
     
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -65,7 +62,7 @@ function BranchList ({branch, getBranch}) {
     };
 
     const removeDelBranchFromList = () => {
-        const removeIteam = branchList.filter((elem) => {
+        const removeIteam = branch.filter((elem) => {
             return (elem._id !== branchDetail.id)
         })
         
@@ -82,7 +79,7 @@ function BranchList ({branch, getBranch}) {
     }
 
     const addEditBranchInList = (name, latitude, longitude) => {
-        let selectedEditBranch = [...branchList]
+        let selectedEditBranch = [...branch]
         
         selectedEditBranch[selecteBranchIndex].name = name;
         selectedEditBranch[selecteBranchIndex].location.latitude = latitude;
@@ -94,25 +91,37 @@ function BranchList ({branch, getBranch}) {
 
             {loading && <Loader/>}
 
-            {isEditBranchFormActive && <AddBranch getBranch={getBranch} selectedEditBranchValues={selectedEditBranchValues} isEditBranchFormActive={editBranchForm} addEditBranchInList={addEditBranchInList}/>}
+            {isEditBranchFormActive && <AddBranch selectedEditBranchValues={selectedEditBranchValues} isEditBranchFormActive={editBranchForm} addEditBranchInList={addEditBranchInList}/>}
 
             <Table>
                 <thead>
                     <tr>
                         <th> # </th>
                         <th> Branch Name </th>
-                        <th> Longitude </th>
+                        <th> Address </th>
+                        <th> landmark </th>
+                        <th> locality </th>
+                        <th> city </th>
+                        <th> state </th>
+                        <th> pincode </th>
                         <th> Latitude </th>
+                        <th> Longitude </th>
                         <th> Delete Branch</th>
                         <th> Edit Branch</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {branchList.map((list, index) => {
+                    {branch.map((list, index) => {
                         return(
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{list.name}</td>
+                                <td>{list.address}</td>
+                                <td>{list.landmark}</td>
+                                <td>{list.locality}</td>
+                                <td>{list.city}</td>
+                                <td>{list.state}</td>
+                                <td>{list.pincode}</td>
                                 <td>{list.location.latitude}</td>
                                 <td>{list.location.longitude}</td>
                                 <td>
@@ -140,8 +149,7 @@ function BranchList ({branch, getBranch}) {
                     })}
                     
                 </tbody>
-            </Table>
-            
+            </Table>            
         </>
     )
 }
