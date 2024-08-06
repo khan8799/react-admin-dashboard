@@ -7,9 +7,13 @@ import Loader from '../shared/components/Loader/Loader';
 
 export default function Branch() {
     const [loading, toggleLoading] = useState(false)
+    const [refreshBranches, setRefreshBranches] = useState(false)
 
     const changeLoadingState = (state) => {
         toggleLoading(state)
+    }
+    const refreshBranch = () => {
+        setRefreshBranches((prev) => !prev)
     }
 
     return (
@@ -23,7 +27,8 @@ export default function Branch() {
                 <div className="col-md-7 grid-margin stretch-card">
                     <Card title="Branch">
                         <BranchList
-                            toggleLoading={changeLoadingState}>
+                            toggleLoading={changeLoadingState}
+                            refreshBranches={refreshBranches}>
                         </BranchList>
                     </Card>
                 </div>
@@ -31,7 +36,8 @@ export default function Branch() {
                 <div className="col-md-5 grid-margin stretch-card">
                     <Card title="Add Branch">
                         <BranchAdd
-                            toggleLoading={changeLoadingState}>
+                            toggleLoading={changeLoadingState}
+                            refreshBranches={refreshBranch}>
                         </BranchAdd>
                     </Card>
                 </div>

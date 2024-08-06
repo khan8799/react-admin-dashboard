@@ -19,7 +19,7 @@ export default function Coupon() {
     }
 
     const refreshCoupon = () => {
-        setRefreshCoupons(true)
+        setRefreshCoupons((prev) => !prev)
     }
 
     return (

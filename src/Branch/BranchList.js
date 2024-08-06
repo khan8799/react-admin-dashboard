@@ -4,9 +4,11 @@ import Pagination from '../shared/components/Pagination/Pagination';
 import { makeRequest } from '../shared/utilities/httpHelper';
 import { closeSnackbar, enqueueSnackbar } from 'notistack';
 
-export default function BranchList({ toggleLoading }) {
+export default function BranchList({ toggleLoading, refreshBranches}) {
     const [Branches, setBranch] = useState([])
-    useEffect(() => getBranch(), [])
+    
+    useEffect(() => getBranch(), [refreshBranches])
+
     let selectedBranch = null;
 
     const getBranch = () => {
