@@ -22,7 +22,7 @@ export default function BranchList( {toggleLoading} ) {
     }
     const onDelete = (branch) => {
         selectedBranch = branch;
-        enqueueSnackbar(`Do you really want to delete ${branch.name} coupon?`, {
+        enqueueSnackbar(`Do you really want to delete ${branch.name} branch?`, {
             variant: 'error',
             anchorOrigin: {vertical: 'top', horizontal: 'center'},
             action,
@@ -44,7 +44,6 @@ export default function BranchList( {toggleLoading} ) {
         </>
     );
     const deleteBranch = () => {
-        toggleLoading(true)
         const url = `branch/${selectedBranch._id}`
         makeRequest(url, {method: 'DELETE'})
             .then(res => {
@@ -55,7 +54,6 @@ export default function BranchList( {toggleLoading} ) {
                 })
                 getBranches()
             })
-            .finally(() => toggleLoading(false))
     }
     return (
         <>
