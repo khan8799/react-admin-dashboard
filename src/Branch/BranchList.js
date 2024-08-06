@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import Table from "../components/Table";
 import { makeRequest } from "../shared/utilities/httpHelper";
+import { closeSnackbar, enqueueSnackbar } from "notistack";
 
 export default function BranchList( {toggleLoading} ) {
     const [branches, setBranches] = useState([])
+
+
+    let selectedBranch = null;
+
     useEffect(() => getBranches(), [])
 
     const getBranches = () => {
@@ -15,8 +20,42 @@ export default function BranchList( {toggleLoading} ) {
             })
             .finally(() => toggleLoading(false))
     }
-    const onDelete = () => {
-        console.log('delete');
+    const onDelete = (branch) => {
+        selectedBranch = branch;
+        enqueueSnackbar(`Do you really want to delete ${branch.name} coupon?`, {
+            variant: 'error',
+            anchorOrigin: {vertical: 'top', horizontal: 'center'},
+            action,
+            persist: true,
+            preventDuplicate: true
+        })
+    }
+    const action = () => (
+        <>
+            <button className="btn btn-sm btn-danger me-2" onClick={() => {
+                closeSnackbar()
+                deleteBranch()
+            }}>
+                Yes, Delete it
+            </button>
+            <button className="btn btn-sm btn-success" onClick={() => closeSnackbar()}>
+                No
+            </button>
+        </>
+    );
+    const deleteBranch = () => {
+        toggleLoading(true)
+        const url = `branch/${selectedBranch._id}`
+        makeRequest(url, {method: 'DELETE'})
+            .then(res => {
+                enqueueSnackbar(`${selectedBranch.name} branch has been deleted successfully`, {
+                    variant: 'success',
+                    anchorOrigin: {vertical: 'top', horizontal: 'center'},
+                    preventDuplicate: true
+                })
+                getBranches()
+            })
+            .finally(() => toggleLoading(false))
     }
     return (
         <>
